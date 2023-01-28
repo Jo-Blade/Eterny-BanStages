@@ -20,8 +20,7 @@ if (title_param) {
 
 
 
-
-const ws = new WebSocket("ws://" + location.host.split(':')[0] + ":8080");
+const ws = new WebSocket("ws://" + location.host);
 ws.addEventListener("open", () =>{
   console.log("We are connected");
 

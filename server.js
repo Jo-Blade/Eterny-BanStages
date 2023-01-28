@@ -1,9 +1,25 @@
 // Importing the required modules
 import { stripHtml } from "string-strip-html";
 import { WebSocketServer } from "ws";
+
+
+import express from "express";
+import * as http from "http";
+
+const app = express();
+const port = 25565;
+
+app.use(express.static('.'));
+
+const server = http.createServer(app);
+
+server.listen(port, () => {
+  console.log("Server turned on, port number:" + port);
+});
+// ------
  
 // Creating a new websocket server
-const wss = new WebSocketServer({ port: 8080 })
+const wss = new WebSocketServer({ server })
 
 var rooms = {};
 
@@ -106,7 +122,7 @@ wss.on("connection", ws => {
     RemoveWS (ws);
   }
 });
-console.log("The WebSocket server is running on port 8080");
+console.log("The WebSocket server is running on port " + port);
 
 function sendRoom(room, req) {
   if (room == 0) // 0 est la room indépendante
