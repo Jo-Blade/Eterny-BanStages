@@ -41,3 +41,5 @@ code = 4: changer la selection des stages, value contient un string avec que des
           les lettres minuscules correspondent aux id des stages de base, les majuscules aux counterpicks
           les stages avec des id élevés s’écrivent "0a3B4e" en rajoutant un chiffre devant la lettre.
 code = 5: changer le nom de l’évenement, value contient un string, le nouveau titre
+
+TEST BONJOUR
