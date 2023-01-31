@@ -22,52 +22,67 @@ if (title_param) {
 }
 
 
+let ws;
 
-const ws = new WebSocket("ws://" + location.host);
-ws.addEventListener("open", () =>{
-  console.log("We are connected");
+function wsConnect () {
+  if (window.location.protocol == "https:")
+    ws = new WebSocket("wss://" + location.host);
+  else
+    ws = new WebSocket("ws://" + location.host);
 
-  const req = {
-    "room": 0,
-    "code": 0,
-    "value": room
-  };
+  ws.addEventListener("open", () =>{
+    console.log("We are connected");
 
-  ws.send(JSON.stringify(req));
-});
+    const req = {
+      "room": 0,
+      "code": 0,
+      "value": room
+    };
 
-ws.addEventListener('message', function (event) {
-  console.log(event.data);
-  const data = JSON.parse(event.data);
+    ws.send(JSON.stringify(req));
+  });
 
-  switch (data.code) {
-    case 0:
-      room = data.value;
-      break;
-    case 1:
-      document.getElementById("stage-" + data.value).classList.add("checked");
-      break;
-    case 2:
-      document.getElementById("stage-" + data.value).classList.remove("checked");
-      break;
-    case 3:
-      // renvoyer toutes les infos pour chaque stage (ex: nouveau client join la room)
-      console.log("renvoyer infos");
-      renvoyerInfos();
-      break;
-    case 4:
-      stagesList = data.value;
-      changerStages();
-      break;
-    case 5: {
-      const title = decodeURIComponent(data.value);
-      document.getElementsByTagName('title')[0].innerHTML = title;
-      document.getElementById('title').innerHTML = title;
-      break;
+  // reconnect if client lost connection
+  ws.addEventListener("close", () =>{
+    console.log("websocket connection lost");
+    // try reconnect after 1s
+    setTimeout(wsConnect, 1000)
+  });
+
+  ws.addEventListener('message', function (event) {
+    console.log(event.data);
+    const data = JSON.parse(event.data);
+
+    switch (data.code) {
+      case 0:
+        room = data.value;
+        break;
+      case 1:
+        document.getElementById("stage-" + data.value).classList.add("checked");
+        break;
+      case 2:
+        document.getElementById("stage-" + data.value).classList.remove("checked");
+        break;
+      case 3:
+        // renvoyer toutes les infos pour chaque stage (ex: nouveau client join la room)
+        console.log("renvoyer infos");
+        renvoyerInfos();
+        break;
+      case 4:
+        stagesList = data.value;
+        changerStages();
+        break;
+      case 5: {
+        const title = decodeURIComponent(data.value);
+        document.getElementsByTagName('title')[0].innerHTML = title;
+        document.getElementById('title').innerHTML = title;
+        break;
+      }
     }
-  }
-});
+  });
+}
 
+wsConnect();
 
 function renvoyerInfos() {
   // renvoyer la liste de stages
@@ -175,4 +190,90 @@ function ajouterStage(isCounter, stageId, i) {
     ws.send(JSON.stringify(req));
     console.log("toggle check");
   });
+}
+
+// boutons en pied de page
+document.getElementById("linkBtn").onclick = function() {
+  copyTextToClipboard(location.protocol + location.host + "?title=" + document.getElementsByTagName('title')[0].innerHTML + "&stages=" + stagesList + "&room=" + room);
+}
+
+document.getElementById("resetBtn").onclick = resetStages;
+
+document.getElementById("editBtn").onclick = function() {
+  if (document.getElementsByTagName("aside")[0].style.display == "none")
+    document.getElementsByTagName("aside")[0].style.display = "";
+  else
+    document.getElementsByTagName("aside")[0].style.display = "none";
+}
+
+async function copyTextToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Text copied to clipboard');
+  } catch(err) {
+    alert('Error in copying text: ', err);
+  }
+}
+
+function resetStages () {
+  const stages = document.querySelectorAll('.stage');
+  stages.forEach(el => {
+    const req = {
+      "room": room,
+      "code": 2,
+      "value": el.id.split('-')[1]
+    };
+    ws.send(JSON.stringify(req));
+  });
+}
+
+// obtenir le code avec 2 lettres pour un stage
+function idCode (id, isCounter) {
+  let txt = "";
+  if (parseInt(id / 26, 10) > 0)
+    txt += parseInt(id / 26, 10);
+
+  if (isCounter)
+    txt += String.fromCharCode(id % 26 + 65)
+  else
+    txt += String.fromCharCode(id % 26 + 97)
+  return txt;
+}
+
+function genOptionsList (parentEl, isCounter) {
+  let newSelect = document.createElement("select");
+  newSelect.setAttribute("class", "editStage");
+  newSelect.innerHTML = '<option value="null">None</option>';
+  for (let i = 0; i < stageNoms.length; i++)
+    newSelect.innerHTML += '<option value="' + idCode(i, isCounter) + '">' + stageNoms[i] + '</option>';
+
+  parentEl.appendChild(newSelect);
+}
+
+const editStartersEl = document.getElementById("editStarters");
+const editCounterpicksEl = document.getElementById("editCounterpicks");
+for (let i = 0; i < 10; i++) {
+  genOptionsList(editStartersEl, false);
+  genOptionsList(editCounterpicksEl, true);
+}
+
+function newStageList () {
+  let txt ="";
+  const editStages = document.querySelectorAll('.editStage');
+  editStages.forEach(el => {
+    if (el.value != "null")
+      txt += el.value
+  });
+  return txt;
+}
+
+// bouton pour editer la page
+document.getElementById("applyBtn").onclick = function() {
+  const reqStages = {
+    "room": room,
+    "code": 4,
+    "value": newStageList()
+  };
+
+  ws.send(JSON.stringify(reqStages));
 }

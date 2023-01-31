@@ -1,3 +1,13 @@
+@font-face {
+  font-family: marsek;
+  src: url(assets/Marsek-Demi.ttf);
+}
+
+body {
+  font-family: marsek;
+  margin-bottom: 40px;
+}
+
 section {
   margin: auto;
 }
@@ -8,6 +18,7 @@ h1, h2 {
 
 p {
   text-align: center;
+  font-size: 12px;
 }
 
 ul {
@@ -39,4 +50,23 @@ img {
 
 .stream > main > section > h1, .stream > main > section > p {
   display: none;
+}
+
+footer {
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  background: red;
+}
+
+.stream footer {
+  display: none;
+}
+
+.stream {
+  margin-bottom: auto;
 }
