@@ -51,9 +51,8 @@ img {
   color: grey;
 }
 
-.stream > main > section > h1, .stream > main > section > p {
+.stream #headerTitle, .stream > main > section > p {
   display: none;
-  margin-top: auto;
 }
 
 footer {
@@ -179,10 +178,10 @@ select{
   content: "";
   color: red;
   position: absolute;
-  top: -20px;
+  top: -1.5rem;
   left: calc(50% - 2px);
   right: calc(50% - 2px);
-  height: 141px;
+  height: 11rem;
   font-size: 100px;
   z-index: 100;
   text-align: center;
