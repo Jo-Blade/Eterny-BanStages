@@ -4,9 +4,10 @@
 }
 
 body {
-  font-family: marsek;
-  margin-bottom: 40px;
+  font-family: marsek, serif;
+  margin: 0 0 40px;
 }
+
 
 section {
   margin: auto;
@@ -14,11 +15,12 @@ section {
 
 h1, h2 {
   text-align: center;
+  margin: 0;
 }
 
 p {
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 ul {
@@ -29,14 +31,15 @@ ul {
 }
 
 li {
-  max-width: 100px;
+  max-width: 8rem;
   list-style: none;
   margin: 10px;
 }
 
 img {
-  width: 100px;
-  border-radius: 5px;
+  width: 8rem;
+  border-radius: 8px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.50);
 }
 
 .checked img {
@@ -50,6 +53,7 @@ img {
 
 .stream > main > section > h1, .stream > main > section > p {
   display: none;
+  margin-top: auto;
 }
 
 footer {
@@ -60,7 +64,7 @@ footer {
   right: 0;
   display: flex;
   justify-content: center;
-  background: red;
+  background: linear-gradient(0deg, rgb(168, 29, 29) 10%, rgb(253, 33, 33) 100%);
 }
 
 .stageValidated {
@@ -77,37 +81,89 @@ footer {
   margin-bottom: auto;
 }
 
+button{
+  border-radius: 7px;
+  margin: 4px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.50);
+  background-color: #ffffff;
+  border: darkred solid 2px;
+}
+
+#applyBtn{
+  background: #bd2222;
+  color: white;
+  font-size: 1.17em;
+  font-family: 'marsek', serif;
+  border: darkred solid 3px;
+  margin-top: 10px;
+}
+
+#headerTitle{
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.50);
+}
+
+#title{
+  color: white;
+  padding: 1rem;
+  background: linear-gradient(0deg, rgb(157, 20, 20) 10%, rgb(225, 50, 50) 100% );
+}
+
+#setting{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px 0 20px;
+  padding: 5px 5px 5px 20px;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.50);
+  border-radius: 5px 5px 0 0;
+  animation-duration: 0.5s;
+  animation-name: animate-fade;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animate-fade {
+  0% { opacity: 0; }
+  0% {transform: translateY(200px)}
+  100% {transform: translateY(0)}
+  100% { opacity: 1; }
+}
+
+select{
+  width: 8rem;
+}
+
+
 /* for stream */
 .stream h2 {
   display: none;
 }
 
 .stream .stage {
-    display: none;
-    opacity: 0;
+  display: none;
+  opacity: 0;
 }
 
 .stream .stage.update {
-    display: block;
-    animation: fade 3s;
+  display: block;
+  animation: fadeInOut 3s;
 }
 
-@keyframes fade {
-    0% {
-        opacity: 0;
-    }
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
 
-    20% {
-        opacity: 1;
-    }
+  20% {
+    opacity: 1;
+  }
 
-    80% {
-        opacity: 1;
-    }
+  80% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-    }
+  100% {
+    opacity: 0;
+  }
 }
 
 .stream .stage.stageValidated {

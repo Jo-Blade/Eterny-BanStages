@@ -158,7 +158,7 @@ function changerStages () {
     }
   }
 
-  if (document.getElementById("counterpicks").childNodes.length == 0) {
+  if (document.getElementById("counterpicks").childNodes.length === 0) {
     document.getElementsByTagName('h2')[0].style.display = "none";
     document.getElementsByTagName('h2')[1].style.display = "none";
   }
