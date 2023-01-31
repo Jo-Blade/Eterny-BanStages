@@ -114,3 +114,23 @@ footer {
   opacity: 1;
   display: block;
 }
+
+/* barrer le terrain */
+.stream .checked {
+  position: relative;
+}
+.stream .checked:before {
+  content: "";
+  color: red;
+  position: absolute;
+  top: -20px;
+  left: calc(50% - 2px);
+  right: calc(50% - 2px);
+  height: 141px;
+  font-size: 100px;
+  z-index: 100;
+  text-align: center;
+  background-color: red;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
