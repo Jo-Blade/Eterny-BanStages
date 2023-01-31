@@ -7,7 +7,10 @@ var url = new URL(location);
 const room_param =  url.searchParams.get("room");
 const title_param =  url.searchParams.get("title");
 const stages_param =  url.searchParams.get("stages");
+const stream_param =  url.searchParams.get("stream");
 
+if (Number(stream_param) == 1)
+  document.body.classList.add("stream");
 if (room_param)
   room = Number(room_param);
 if (stages_param)
@@ -132,6 +135,15 @@ function changerStages () {
       ajouterStage(isCounterpickStage(stagesList[i]), letterValue(stagesList[i]), i);
       i++;
     }
+  }
+
+  if (document.getElementById("counterpicks").childNodes.length == 0) {
+    document.getElementsByTagName('h2')[0].style.display = "none";
+    document.getElementsByTagName('h2')[1].style.display = "none";
+  }
+  else {
+    document.getElementsByTagName('h2')[0].style.display = "";
+    document.getElementsByTagName('h2')[1].style.display = "";
   }
 }
 

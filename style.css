@@ -36,3 +36,7 @@ img {
   opacity: 0.3;
   color: grey;
 }
+
+.stream > main > section > h1, .stream > main > section > p {
+  display: none;
+}

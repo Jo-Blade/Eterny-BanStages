@@ -7,7 +7,7 @@ import express from "express";
 import * as http from "http";
 
 const app = express();
-const port = 25565;
+const port = 8002;
 
 app.use(express.static('.'));
 
