@@ -57,12 +57,18 @@ function wsConnect () {
       case 0:
         room = data.value;
         break;
-      case 1:
-        document.getElementById("stage-" + data.value).classList.add("checked");
+      case 1: {
+        const stage = document.getElementById("stage-" + data.value);
+        stage.classList.add("checked");
+        updateAndValidate(stage);
         break;
-      case 2:
-        document.getElementById("stage-" + data.value).classList.remove("checked");
+      }
+      case 2: {
+        const stage = document.getElementById("stage-" + data.value);
+        stage.classList.remove("checked");
+        updateAndValidate(stage);
         break;
+      }
       case 3:
         // renvoyer toutes les infos pour chaque stage (ex: nouveau client join la room)
         console.log("renvoyer infos");
@@ -190,6 +196,29 @@ function ajouterStage(isCounter, stageId, i) {
     ws.send(JSON.stringify(req));
     console.log("toggle check");
   });
+
+  // double click pour valider directement le stage sélectionné
+  newStage.addEventListener('dblclick', () => {
+    const stages = document.querySelectorAll('.stage');
+    stages.forEach(el => {
+      if (el == newStage) {
+        const req = {
+          "room": room,
+          "code": 2,
+          "value": el.id.split('-')[1]
+        };
+        ws.send(JSON.stringify(req));
+      }
+      else {
+        const req = {
+          "room": room,
+          "code": 1,
+          "value": el.id.split('-')[1]
+        };
+        ws.send(JSON.stringify(req));
+      }
+    });
+  });
 }
 
 // boutons en pied de page
@@ -276,4 +305,32 @@ document.getElementById("applyBtn").onclick = function() {
   };
 
   ws.send(JSON.stringify(reqStages));
+}
+
+// ajouter la class update pendant 3s et valider si un
+// seul stage restant
+function updateAndValidate (stage) {
+  stage.classList.add("update");
+  setTimeout(function () {
+    stage.classList.remove("update");
+  }, 3000);
+
+  const stagesValidated = document.querySelectorAll('.stageValidated');
+  stagesValidated.forEach(el => {
+    el.classList.remove("stageValidated");
+  });
+
+  let stagesUnchecked = [];
+  const stages = document.querySelectorAll('.stage');
+  stages.forEach(el => {
+    if (!el.classList.contains("checked"))
+      stagesUnchecked.push(el);
+  });
+  if (stagesUnchecked.length == 1) {
+    stagesUnchecked[0].classList.add("stageValidated");
+    stages.forEach(el => {
+      el.classList.remove("update");
+    });
+
+  }
 }

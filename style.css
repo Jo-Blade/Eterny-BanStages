@@ -63,10 +63,54 @@ footer {
   background: red;
 }
 
+.stageValidated {
+  padding: 3px;
+  border-radius: 5px;
+  border: solid green 3px;
+}
+
 .stream footer {
   display: none;
 }
 
 .stream {
   margin-bottom: auto;
+}
+
+/* for stream */
+.stream h2 {
+  display: none;
+}
+
+.stream .stage {
+    display: none;
+    opacity: 0;
+}
+
+.stream .stage.update {
+    display: block;
+    animation: fade 3s;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.stream .stage.stageValidated {
+  opacity: 1;
+  display: block;
 }
