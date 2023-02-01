@@ -223,7 +223,7 @@ function ajouterStage(isCounter, stageId, i) {
 
 // boutons en pied de page
 document.getElementById("linkBtn").onclick = function() {
-  copyTextToClipboard(location.protocol + location.host + "?title=" + document.getElementsByTagName('title')[0].innerHTML + "&stages=" + stagesList + "&room=" + room);
+  copyTextToClipboard(location.protocol + "//" + location.host + "?title=" + document.getElementsByTagName('title')[0].innerHTML + "&stages=" + stagesList + "&room=" + room);
 }
 
 document.getElementById("resetBtn").onclick = resetStages;
