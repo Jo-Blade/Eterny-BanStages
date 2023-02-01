@@ -189,3 +189,9 @@ select{
   transform: rotate(45deg);
   border-radius: 2px;
 }
+
+.stream main section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
