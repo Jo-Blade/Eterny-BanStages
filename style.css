@@ -51,9 +51,8 @@ img {
   color: grey;
 }
 
-.stream > main > section > h1, .stream > main > section > p {
+.stream #headerTitle, .stream > main > section > p {
   display: none;
-  margin-top: auto;
 }
 
 footer {
@@ -67,19 +66,18 @@ footer {
   background: linear-gradient(0deg, rgb(168, 29, 29) 10%, rgb(253, 33, 33) 100%);
 }
 
+.stageValidated {
+  padding: 3px;
+  border-radius: 5px;
+  border: solid green 3px;
+}
+
 .stream footer {
   display: none;
 }
 
 .stream {
   margin-bottom: auto;
-}
-.grid {
-  display: grid;
-  gap: 1px;
-  grid-template-columns: repeat(3, 10rem);
-  align-items: start;
-  justify-items: center;
 }
 
 button{
@@ -89,6 +87,7 @@ button{
   background-color: #ffffff;
   border: darkred solid 2px;
 }
+
 #applyBtn{
   background: #bd2222;
   color: white;
@@ -101,11 +100,13 @@ button{
 #headerTitle{
   box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.50);
 }
+
 #title{
   color: white;
   padding: 1rem;
   background: linear-gradient(0deg, rgb(157, 20, 20) 10%, rgb(225, 50, 50) 100% );
 }
+
 #setting{
   display: flex;
   flex-direction: column;
@@ -117,7 +118,6 @@ button{
   animation-duration: 0.5s;
   animation-name: animate-fade;
   animation-fill-mode: forwards;
-
 }
 
 @keyframes animate-fade {
@@ -129,4 +129,69 @@ button{
 
 select{
   width: 8rem;
+}
+
+
+/* for stream */
+.stream h2 {
+  display: none;
+}
+
+.stream .stage {
+  display: none;
+  opacity: 0;
+}
+
+.stream .stage.update {
+  display: block;
+  animation: fadeInOut 3s;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.stream .stage.stageValidated {
+  opacity: 1;
+  display: block;
+}
+
+/* barrer le terrain */
+.stream .checked {
+  position: relative;
+}
+.stream .checked:before {
+  content: "";
+  color: red;
+  position: absolute;
+  top: -1.5rem;
+  left: calc(50% - 2px);
+  right: calc(50% - 2px);
+  height: 11rem;
+  font-size: 100px;
+  z-index: 100;
+  text-align: center;
+  background-color: red;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.stream main section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
