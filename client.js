@@ -229,8 +229,13 @@ document.getElementById("linkBtn").onclick = function() {
 document.getElementById("resetBtn").onclick = resetStages;
 
 document.getElementById("editBtn").onclick = function() {
-  if (document.getElementsByTagName("aside")[0].style.display == "none")
+  if (document.getElementsByTagName("aside")[0].style.display == "none") {
     document.getElementsByTagName("aside")[0].style.display = "";
+    window.scroll({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }
   else
     document.getElementsByTagName("aside")[0].style.display = "none";
 }
