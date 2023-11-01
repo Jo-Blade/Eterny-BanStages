@@ -1,4 +1,17 @@
-fonctionnement de l’app:
+# Eterny BanStages
+
+![Démonstration du mode Stream](./output2.gif)
+
+![Démonstration de l'app](./output.gif)
+
+Une application web pour choisir un terrain pour jouer en compétition sur « Super Smash Bros Ultimate ».
+L'application propose :
+- Possibilité de « bannir » des stages (les griser) en cliquant dessus
+- Selection d'un stage en double cliquant dessus
+- Synchronisation des écrans de plusieurs appareils pour des joueurs « online » ou pour afficher la selection sur un stream
+- Mode « stream » pour afficher temporairement les stages « banni » et avec un fond transparent pour utiliser avec OBS (utiliser un site web comme source)
+
+## fonctionnement de l’app:
 
 - lancer le websocket-server (node websocket-server.js)
 - lancer le server web (par exemple python -m http.server)
@@ -8,7 +21,7 @@ IMPORTANT: le websocket-server doit être accessible via la même ip que le serv
 le port 6000 doit être disponible. Sinon modifier le client.js et websocket-server.js pour changer.
 (c’est cette ip qui sera utilisée pour établir la connection.)
 
-api websocket:
+## api websocket:
 
 les informations sont partagées entre les pages d’une même room via une websocket. Les messages sont tous
 de la forme d’un objet JSON:
